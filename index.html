@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>존예쁨닷컴</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, ma404ximum-scale=1.0, user-scalable=no">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+</head>
+<style type="text/css">
+    *{margin:0;padding:0;}
+    html, body{height:100%;}
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var contentArray = [];
+var iConArray = [];
+var markers = [];
+var iterator = 0;
+var markerArray = [];
+var map;
+ 
+// infowindow contents 배열
+ contentArray[0] = "쇠소깍(은)";
+ contentArray[1] = "사려니숲길(은)";
+ contentArray[2] = "정방폭포";
+ contentArray[3] = "산굼부리";
+ contentArray[4] = "김녕해수욕장";
+ contentArray[5] = "새별오름";
+ contentArray[6] = "안덕계곡";
+ contentArray[7] = "오라동 메밀밭"
+ contentArray[8] = "황우지해안"
+ contentArray[9] = "서귀포매일 올레시장"
+ contentArray[10] = "용눈이 오름"
+ contentArray[11] = "세화해변"
+ contentArray[12] = "황우지해안"
+ contentArray[13] = "만장굴"
+ contentArray[14] = "금오름"
+ contentArray[15] = "렛츠럼팜"
+ contentArray[16] = "비자림"
+ contentArray[17] = "허브동산(야경)"
+ contentArray[18] = "천지연폭포"
+ contentArray[19] = "힐링카약파크"
+ contentArray[20] = "월대천"
+ contentArray[21] = "자매국수"
+ contentArray[22] = "다미회"
+ contentArray[23] = "베니키아 아이진호텔"
+ contentArray[24] = "월정리해변(은)"
+ contentArray[25] = "함덕해수욕장(은)"
+ contentArray[26] = "원앙폭포(은)"
+ contentArray[27] = "앤트러사이트(한라봉주스)"
+
+
+ 
+ /*contentArray[2] = "blog.uhoon.co.kr";
+ contentArray[3] = "blog.uhoon.co.kr ";
+ contentArray[4] = "blog.uhoon.co.kr";
+ contentArray[5] = "blog.goodkiss.co.kr";
+ contentArray[6] = "GG";
+ contentArray[7] = "blog.goodkiss.co.kr";
+ contentArray[8] = "II";
+ contentArray[9] = "blog.goodkiss.co.kr";*/
+ 
+// marker icon 배열
+ iConArray[0] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[1] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[2] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[3] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[4] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[5] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[6] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[7] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[8] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[9] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[10] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[11] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[12] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[13] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[14] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[15] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[16] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[17] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[18] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[19] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[20] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[21] = "http://maps.google.com/mapfiles/ms/micons/red-dot.png";//음식
+ iConArray[22] = "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
+ iConArray[23] = "http://maps.google.com/mapfiles/ms/micons/green-dot.png";//숙박
+ iConArray[24] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[25] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[26] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+ iConArray[27] = "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png";
+// 위경도 배열
+/*
+var markerArray = [ new google.maps.LatLng(40.3938,-3.7077)
+, new google.maps.LatLng(40.45038,-3.69803)
+, new google.maps.LatLng(40.45848,-3.69477)
+, new google.maps.LatLng(40.40672,-3.68327)
+, new google.maps.LatLng(40.43672,-3.62093)
+, new google.maps.LatLng(40.46725,-3.67443)
+, new google.maps.LatLng(40.43794,-3.67228)
+, new google.maps.LatLng(40.46212,-3.69166)
+, new google.maps.LatLng(40.41926,-3.70445)
+, new google.maps.LatLng(40.42533,-3.6844)
+];
+*/
+ 
+markerArray[0] = new google.maps.LatLng(33.252751, 126.623553);
+markerArray[1] = new google.maps.LatLng(33.423211, 126.626868);
+markerArray[2] = new google.maps.LatLng(33.244843, 126.571846);
+markerArray[3] = new google.maps.LatLng(33.431845, 126.689974);
+markerArray[4] = new google.maps.LatLng(33.558187, 126.759804);
+markerArray[5] = new google.maps.LatLng(33.365975, 126.356442);
+markerArray[6] = new google.maps.LatLng(33.257356, 126.352881);
+markerArray[7] = new google.maps.LatLng(33.426855, 126.505724);
+markerArray[8] = new google.maps.LatLng(33.241955, 126.550418);
+markerArray[9] = new google.maps.LatLng(33.249956, 126.563924);
+markerArray[10] = new google.maps.LatLng(33.460103, 126.831443);
+markerArray[11] = new google.maps.LatLng(33.525205, 126.861085);
+markerArray[12] = new google.maps.LatLng(33.241793, 126.550386);
+markerArray[13] = new google.maps.LatLng(33.528531, 126.771438);
+markerArray[14] = new google.maps.LatLng(33.476648, 126.714416);
+markerArray[15] = new google.maps.LatLng(33.418901, 126.68214);
+markerArray[16] = new google.maps.LatLng(33.491366, 126.811337);
+markerArray[17] = new google.maps.LatLng(33.329816, 126.814980);
+markerArray[18] = new google.maps.LatLng(33.247188, 126.554701);
+markerArray[19] = new google.maps.LatLng(33.350234, 126.218198);
+markerArray[20] = new google.maps.LatLng(33.492282, 126.434766);
+markerArray[21] = new google.maps.LatLng(33.508071, 126.532385);
+markerArray[22] = new google.maps.LatLng(33.500464, 126.531295);
+markerArray[23] = new google.maps.LatLng(33.482516, 126.494846);
+markerArray[24] = new google.maps.LatLng(33.555972, 126.796229);
+markerArray[25] = new google.maps.LatLng(33.543352, 126.669797);
+markerArray[26] = new google.maps.LatLng(33.300566, 126.580231);
+markerArray[27] = new google.maps.LatLng(33.407654, 126.258126);
+/*markerArray[2] = new google.maps.LatLng(40.45848,-3.69477);
+markerArray[3] = new google.maps.LatLng(40.40672,-3.68327);
+markerArray[4] = new google.maps.LatLng(40.43672,-3.62093);
+markerArray[5] = new google.maps.LatLng(40.46725,-3.67443);
+markerArray[6] = new google.maps.LatLng(40.43794,-3.67228);
+markerArray[7] = new google.maps.LatLng(40.46212,-3.69166);
+markerArray[8] = new google.maps.LatLng(40.41926,-3.70445);
+markerArray[9] = new google.maps.LatLng(40.42533,-3.6844);*/
+ 
+function initialize() {
+  var mapOptions = {
+    zoom: 10,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: new google.maps.LatLng(33.510601, 126.491289)
+  };
+ 
+  map = new google.maps.Map(document.getElementById('map'),mapOptions);
+ 
+  for (var i = 0; i < markerArray.length; i++) {
+    addMarker();
+  }
+}
+ 
+ 
+// 마커 추가
+function addMarker() {
+ 
+  var marker = new google.maps.Marker({
+    position: markerArray[iterator],
+    map: map,
+    draggable: false,
+    icon: iConArray[iterator]
+  });
+  markers.push(marker);
+ 
+  var infowindow = new google.maps.InfoWindow({
+      content: contentArray[iterator]
+  });
+ 
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map,marker);
+  });
+  iterator++;
+}
+ 
+google.maps.event.addDomListener(window, 'load', initialize);
+//-->
+</SCRIPT>
+<body>
+<div id="map" style="width:100%;height:100%;"></div>
+</body>
+</html>
